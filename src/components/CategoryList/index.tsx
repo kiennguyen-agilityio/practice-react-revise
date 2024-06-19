@@ -7,7 +7,7 @@ const CategoryList = () => {
   const [activeCategory, setActiveCategory] = useState<string>('');
 
   return (
-    <div className="p-4 mt-8">
+    <div className="p-4 mt-4">
       <h2 className="text-lg font-bold text-gray-800 mb-4 ml-2">Categories</h2>
       <ul>
         {categories.map(({ id, name, count }) => (
