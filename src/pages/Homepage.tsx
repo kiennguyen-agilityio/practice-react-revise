@@ -1,13 +1,13 @@
 import CategoryList from '@app/components/CategoryList';
 import FoodList from '@app/components/FoodList';
 
-const HomePage: React.FC = () => (
-  <body className="h-screen">
-    <div className="flex mt-4">
+const HomePage = () => (
+  <div className="h-screen">
+    <div className="flex mt-4 text-nowrap">
       <CategoryList />
       <FoodList />
     </div>
-  </body>
+  </div>
 );
 
 export default HomePage;
