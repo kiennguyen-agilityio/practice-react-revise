@@ -1,16 +1,16 @@
-import './App.css';
-import Navbar from '@app/components/Navbar';
-import HomePage from '@app/pages/Homepage';
+import { RouterProvider } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
+// Routes
+import { ROUTER } from './routes';
+
+import 'App.css';
+
 const queryClient = new QueryClient();
-function App() {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <Navbar />
-      <HomePage />
-    </QueryClientProvider>
-  );
-}
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <RouterProvider router={ROUTER} />
+  </QueryClientProvider>
+);
 
 export default App;
