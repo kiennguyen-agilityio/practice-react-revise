@@ -36,6 +36,7 @@
         "varsIgnorePattern": "^_"
       }
     ],
+    "no-console": ["error", { "allow": ["warn", "error"] }],
     "no-useless-escape": "off",
     "arrow-body-style": ["error", "as-needed"],
     "react/no-array-index-key": "error",
