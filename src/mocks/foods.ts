@@ -7,7 +7,8 @@ export const foods = [
     price: '$12.99',
     bestSeller: true,
     sold: 150,
-    image: 'https://example.com/spaghetti-carbonara.jpg',
+    image:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR110T6Goh43bGgJP8cR70KaECflwZ7GZSNjA&s',
   },
   {
     id: '2',
@@ -17,6 +18,7 @@ export const foods = [
     price: '$9.99',
     bestSeller: false,
     sold: 200,
-    image: 'https://example.com/margherita-pizza.jpg',
+    image:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR110T6Goh43bGgJP8cR70KaECflwZ7GZSNjA&s',
   },
 ];
