@@ -1,7 +1,8 @@
 import { useCallback } from 'react';
-
-import { Category } from '@app/interfaces/category';
 import { useSearchParams } from 'react-router-dom';
+
+// interfaces
+import { Category } from '@app/interfaces/category';
 
 interface Props {
   categories: Category[];

@@ -1,10 +1,14 @@
+import { Link } from 'react-router-dom';
+
 // Components
 import SearchBar from '@app/components/SearchBar';
 import { Bell } from '@app/components/Icons/Bell';
 
 const Navbar = () => (
   <nav className="bg-white p-4 flex sm:gap-5 justify-between items-center shadow-md">
-    <div className="text-gray-800 text-2xl font-bold">Tasty</div>
+    <Link to="/" className="text-gray-800 text-2xl font-bold">
+      Tasty
+    </Link>
 
     <SearchBar />
 

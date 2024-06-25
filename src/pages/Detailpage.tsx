@@ -1,8 +1,22 @@
-import { foods } from '@app/mocks/foods';
+import { useNavigate, useParams } from 'react-router-dom';
+
+// apis
+import { useFoodById } from '@app/apis/useFood';
 
 const DetailPage = () => {
-  const food = foods[0];
-  const { name, description, price, bestSeller, sold, image } = food;
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const { data: food, isLoading, error } = useFoodById(id as string);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error || !food) {
+    return <div>Error loading food details</div>;
+  }
+
+  const { name, description, price, sold, bestSeller, image } = food;
 
   return (
     <div className="min-h-screen w-screen bg-gray-100 flex items-start justify-center p-4">
@@ -31,7 +45,10 @@ const DetailPage = () => {
               )}
             </div>
 
-            <button className="mt-6 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-300">
+            <button
+              className="mt-6 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-300"
+              onClick={() => navigate(-1)}
+            >
               Back to Menu
             </button>
           </div>
