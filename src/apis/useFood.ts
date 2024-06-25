@@ -45,3 +45,28 @@ const useFoodList = (categorySlug: string) => {
 };
 
 export default useFoodList;
+
+export const getFoodById = async (id: string): Promise<Food> => {
+  try {
+    const response = await fetch(`${FOOD_API}/${id}`, {
+      headers: { 'content-type': 'application/json' },
+    });
+
+    const data = await response.json();
+
+    const food = customErrors(response, data);
+
+    return food;
+  } catch (error) {
+    throw error as CustomErrors;
+  }
+};
+
+export const useFoodById = (id: string) => {
+  const { data, error, isLoading } = useQuery<Food, Error>({
+    queryKey: QUERY_KEYS.FOOD_BY_ID(id),
+    queryFn: () => getFoodById(id),
+  } as UseQueryOptions<Food, Error>);
+
+  return { data, isLoading, error };
+};
