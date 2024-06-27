@@ -26,8 +26,9 @@ const CategoryList = ({ categories }: Props) => {
         {categories.map(({ id, name, slug }) => (
           <li
             key={id}
-            className={`flex justify-between items-center p-2 rounded-lg mb-2 cursor-pointer gap-8
-            ${categorySlug === slug ? 'bg-[#edebfe] text-[#4734f7]' : 'text-black-900'}`}
+            className={`flex justify-between items-center p-2 rounded-lg mb-2 cursor-pointer gap-8 transition-colors 
+      ${categorySlug === slug ? 'bg-[#edebfe] text-[#4734f7]' : 'text-black-900'} 
+      hover:bg-[#ececec] hover:text-[#4734f7]`}
             onClick={() => handleCategoryClick(slug)}
           >
             <span className={categorySlug === slug ? 'font-bold' : ''}>
