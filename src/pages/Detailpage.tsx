@@ -1,15 +1,35 @@
 import { useNavigate, useParams } from 'react-router-dom';
 
+// store
+import useFavoriteStore from '@app/stores/useStore';
+
 // apis
 import { useFoodById } from '@app/apis/useFood';
+
+// components
+import { StarIcon } from '@app/components/Icons/Star';
+import SkeletonLoader from '@app/components/SkeletonLoader';
 
 const DetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { data: food, isLoading, error } = useFoodById(id as string);
+  const { favorites, toggleFavorite } = useFavoriteStore();
+
+  const handleToggleFavorite = () => {
+    toggleFavorite(id as string);
+  };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="space-y-4">
+        {Array(1)
+          .fill(0)
+          .map((id) => (
+            <SkeletonLoader key={id as number} layout="Detail" />
+          ))}
+      </div>
+    );
   }
 
   if (error || !food) {
@@ -31,7 +51,16 @@ const DetailPage = () => {
 
           <div className="p-6 flex flex-col justify-between">
             <div>
-              <h2 className="text-3xl font-bold text-gray-800">{name}</h2>
+              <div className="flex items-center gap-6">
+                <h2 className="text-3xl font-bold text-gray-800">{name}</h2>
+
+                <button onClick={handleToggleFavorite}>
+                  <StarIcon
+                    className={`w-6 h-6 ${favorites.includes(id as string) ? 'fill-yellow-400' : ''}`}
+                  />
+                </button>
+              </div>
+
               <p className="mt-4 text-gray-600">
                 <strong>Price:</strong> {price}
               </p>

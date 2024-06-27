@@ -9,10 +9,10 @@ const Navbar = () => (
     <Link to="/" className="text-gray-800 text-2xl font-bold">
       Tasty
     </Link>
-
     <SearchBar />
 
     <Bell className="size-5" />
+
     <div className="flex items-center space-x-6">
       <div className="flex items-center space-x-3">
         <img
@@ -20,7 +20,7 @@ const Navbar = () => (
           alt="Admin"
           className="rounded-full w-10 h-10"
         />
-        <div className="text-gray-800">
+        <div className="text-gray-800 max-sm:hidden">
           <div className="font-bold">Marvin McKinney</div>
           <div className="text-sm text-gray-500">Super Admin</div>
         </div>
