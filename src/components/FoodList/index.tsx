@@ -36,7 +36,7 @@ const FoodList = ({ foods }: Props) => {
             ({ id, name, description, price, image, bestSeller, sold }) => (
               <li
                 key={id}
-                className="flex items-center justify-between p-4 bg-white rounded-2xl shadow cursor-pointer transition-transform transform hover:scale-105 hover:shadow-lg"
+                className="flex items-center justify-between p-4 bg-white rounded-2xl shadow cursor-pointer transition-transform transform hover:bg-slate-100"
                 onClick={() => navigate(`/foods/${id}`)}
               >
                 <div className="flex items-center max-sm:flex-col">
