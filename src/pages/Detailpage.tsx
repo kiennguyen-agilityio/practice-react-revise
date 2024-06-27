@@ -8,6 +8,7 @@ import { useFoodById } from '@app/apis/useFood';
 
 // components
 import { StarIcon } from '@app/components/Icons/Star';
+import SkeletonLoader from '@app/components/SkeletonLoader';
 
 const DetailPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -20,7 +21,15 @@ const DetailPage = () => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="space-y-4">
+        {Array(1)
+          .fill(0)
+          .map((id) => (
+            <SkeletonLoader key={id as number} layout="Detail" />
+          ))}
+      </div>
+    );
   }
 
   if (error || !food) {
