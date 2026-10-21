@@ -32,7 +32,9 @@ const FoodList = ({ foods }: Props) => {
       </div>
       <div className="w-full mx-auto p-2">
         {!foods.length && (
-          <p className="text-gray-500 text-center py-8">No foods found.</p>
+          <p role="status" className="text-gray-500 text-center py-8">
+            No foods found.
+          </p>
         )}
         <ul className="space-y-4">
           {foods?.map(
