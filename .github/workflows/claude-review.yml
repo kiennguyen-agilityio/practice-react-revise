@@ -4,17 +4,31 @@ on:
   issue_comment:
     types: [created]
 
-# One review at a time per PR; a newer @claude comment cancels the older run.
+# issue_comment has no event-level content filters, so every comment starts a run
+# and the job-level `if` below only skips the job. Concurrency is evaluated before
+# that `if`, so ineligible comments (bots, no @claude, ...) get a unique group and
+# can never queue behind or cancel a real review. Keep this condition in sync
+# with the job `if`.
+# Eligible comments share one group per PR and never cancel an active review;
+# GitHub keeps at most one pending run per group, and a newer pending run
+# replaces an older pending one.
 concurrency:
-  group: claude-review-${{ github.event.issue.number }}
-  cancel-in-progress: true
+  group: >-
+    ${{ (github.event.issue.pull_request != null &&
+    github.event.comment.user.type != 'Bot' &&
+    contains(github.event.comment.body, '@claude') &&
+    contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association))
+    && format('claude-review-{0}', github.event.issue.number)
+    || format('claude-skip-{0}', github.run_id) }}
+  cancel-in-progress: false
 
 jobs:
   review:
     # Only PR comments (not plain issues) that mention @claude,
-    # written by someone with a trusted relationship to the repo.
+    # written by a human with a trusted relationship to the repo.
     if: >-
       github.event.issue.pull_request != null &&
+      github.event.comment.user.type != 'Bot' &&
       contains(github.event.comment.body, '@claude') &&
       contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)
     runs-on: ubuntu-latest
