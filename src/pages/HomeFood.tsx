@@ -1,4 +1,8 @@
+import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
+
+// store
+import useFavoriteStore from '@app/stores/useStore';
 
 // apis
 import useFoodList from '@app/apis/useFood';
@@ -12,6 +16,12 @@ const HomepageFood = () => {
   const categorySlug = searchParam.get('categorySlug') || '';
 
   const { data: foods, isLoading, error } = useFoodList(categorySlug);
+  const pruneFavorites = useFavoriteStore((state) => state.pruneFavorites);
+
+  useEffect(() => {
+    if (isLoading || error) return;
+    pruneFavorites(foods.map(({ id }) => id));
+  }, [foods, isLoading, error, pruneFavorites]);
 
   if (isLoading) {
     return (
