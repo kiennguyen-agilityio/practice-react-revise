@@ -7,6 +7,7 @@ import { FAVORITE_STORE_KEY } from '@app/constants/storeKey';
 interface FavoriteState {
   favorites: string[];
   toggleFavorite: (foodId: string) => void;
+  pruneFavorites: (validIds: string[]) => void;
 }
 
 const useFavoriteStore = create<FavoriteState>()(
@@ -24,6 +25,10 @@ const useFavoriteStore = create<FavoriteState>()(
             return { favorites: [...state.favorites, foodId] };
           }
         }),
+      pruneFavorites: (validIds: string[]) =>
+        set((state) => ({
+          favorites: state.favorites.filter((id) => validIds.includes(id)),
+        })),
     }),
     {
       name: FAVORITE_STORE_KEY,
