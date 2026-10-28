@@ -1,8 +1,29 @@
 import STATUS_CODE from '@app/constants/statusCode';
 
-type CustomErrors = {
-  messageError: string;
-  status: number;
+class HttpError extends Error {
+  readonly status: number;
+
+  constructor(status: number, message: string) {
+    super(message);
+    this.name = 'HttpError';
+    this.status = status;
+  }
+
+  // Kept for compatibility with the previous `{ messageError, status }` shape.
+  get messageError() {
+    return this.message;
+  }
+}
+
+type CustomErrors = HttpError;
+
+const ERROR_MESSAGES: Record<number, string> = {
+  [STATUS_CODE.BAD_REQUEST]: 'Bad Request',
+  [STATUS_CODE.UNAUTHORIZED]: 'Unauthorized',
+  [STATUS_CODE.FORBIDDEN]: 'Forbidden',
+  [STATUS_CODE.NOT_FOUND]: 'Page Not Found',
+  [STATUS_CODE.INTERNAL_SERVER_ERROR]: 'Internal Server Error',
+  [STATUS_CODE.SERVER_UNAVAILABLE]: 'Service Unavailable',
 };
 
 const customErrors = <T>(response: Response, items: T): T => {
@@ -10,43 +31,13 @@ const customErrors = <T>(response: Response, items: T): T => {
     case STATUS_CODE.OK:
     case STATUS_CODE.CREATED:
       return items;
-    case STATUS_CODE.BAD_REQUEST:
-      throw {
-        messageError: `${response.status} Bad Request`,
-        status: response.status,
-      };
-    case STATUS_CODE.UNAUTHORIZED:
-      throw {
-        messageError: `${response.status} Unauthorized`,
-        status: response.status,
-      };
-    case STATUS_CODE.FORBIDDEN:
-      throw {
-        messageError: `${response.status} Forbidden`,
-        status: response.status,
-      };
-    case STATUS_CODE.NOT_FOUND:
-      throw {
-        messageError: `${response.status} Page Not Found`,
-        status: response.status,
-      };
-    case STATUS_CODE.INTERNAL_SERVER_ERROR:
-      throw {
-        messageError: `${response.status} Internal Server Error`,
-        status: response.status,
-      };
-    case STATUS_CODE.SERVER_UNAVAILABLE:
-      throw {
-        messageError: `${response.status} Service Unavailable`,
-        status: response.status,
-      };
-    default:
-      throw {
-        messageError: `${response.status} Fail to fetch`,
-        status: response.status,
-      };
+    default: {
+      const reason = ERROR_MESSAGES[response.status] ?? 'Fail to fetch';
+
+      throw new HttpError(response.status, `${response.status} ${reason}`);
+    }
   }
 };
 
-export { customErrors };
+export { customErrors, HttpError };
 export type { CustomErrors };
