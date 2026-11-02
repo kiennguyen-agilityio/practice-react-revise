@@ -44,4 +44,19 @@ describe('useFavoriteStore', () => {
 
     expect(useFavoriteStore.getState().favorites).toEqual(['7', '8']);
   });
+
+  it('has no automatic pruning action; removal is only via toggleFavorite', () => {
+    expect(Object.keys(useFavoriteStore.getState()).sort()).toEqual([
+      'favorites',
+      'toggleFavorite',
+    ]);
+  });
+
+  it('starts empty instead of crashing when the persisted copy is corrupt', async () => {
+    localStorage.setItem(FAVORITE_STORE_KEY, '{not json');
+
+    await expect(useFavoriteStore.persist.rehydrate()).resolves.not.toThrow();
+
+    expect(useFavoriteStore.getState().favorites).toEqual([]);
+  });
 });
