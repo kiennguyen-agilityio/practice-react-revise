@@ -31,6 +31,9 @@ const FoodList = ({ foods }: Props) => {
         <h2 className="text-lg font-bold text-gray-800 ml-2">Menu</h2>
       </div>
       <div className="w-full mx-auto p-2">
+        {!foods.length && (
+          <p className="text-gray-500 text-center py-8">No foods found.</p>
+        )}
         <ul className="space-y-4">
           {foods?.map(
             ({ id, name, description, price, image, bestSeller, sold }) => (

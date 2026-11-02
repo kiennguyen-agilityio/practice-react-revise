@@ -14,7 +14,12 @@ const CategoryList = ({ categories }: Props) => {
 
   const handleCategoryClick = useCallback(
     (slug: string) => {
-      setSearchParams({ categorySlug: slug });
+      // keep the current search term when switching category
+      setSearchParams((prev) => {
+        prev.set('categorySlug', slug);
+
+        return prev;
+      });
     },
     [setSearchParams],
   );
