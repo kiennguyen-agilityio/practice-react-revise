@@ -37,10 +37,10 @@ const SkeletonLoader = ({ layout }: Props) => {
             <div className="grid grid-cols-1 md:grid-cols-2">
               <div className="p-6 animate-pulse">
                 <div className="w-full h-64 bg-gray-300 rounded-md"></div>
-                <p className="mt-4">
+                <div className="mt-4">
                   <div className="w-3/4 h-6 bg-gray-300 rounded"></div>
                   <div className="w-1/2 h-6 bg-gray-300 rounded mt-2"></div>
-                </p>
+                </div>
               </div>
 
               <div className="p-6 flex flex-col justify-between animate-pulse">
@@ -50,12 +50,12 @@ const SkeletonLoader = ({ layout }: Props) => {
                     <div className="w-6 h-6 bg-gray-300 rounded-full"></div>
                   </div>
 
-                  <p className="mt-4 text-gray-600">
+                  <div className="mt-4 text-gray-600">
                     <div className="w-24 h-4 bg-gray-300 rounded"></div>
-                  </p>
-                  <p className="mt-4 text-gray-600">
+                  </div>
+                  <div className="mt-4 text-gray-600">
                     <div className="w-16 h-4 bg-gray-300 rounded"></div>
-                  </p>
+                  </div>
                   <div className="mt-4 flex items-center text-sm font-bold text-white bg-gray-300 px-4 py-2 rounded-md shadow-md"></div>
                 </div>
 
