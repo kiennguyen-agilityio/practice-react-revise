@@ -6,6 +6,7 @@ import { FOOD_API } from '@app/constants/api';
 
 // helpers
 import { CustomErrors, customErrors } from '@app/helpers/handleError';
+import { assertFoodList } from '@app/helpers/validateFoods';
 
 // models
 import { Food } from '@app/models/food';
@@ -22,7 +23,7 @@ export const fetchFoodByCategorySlug = async (
 
     const data = await response.json();
 
-    const listFoods = customErrors(response, data);
+    const listFoods = assertFoodList(customErrors(response, data));
 
     return listFoods;
   } catch (error) {

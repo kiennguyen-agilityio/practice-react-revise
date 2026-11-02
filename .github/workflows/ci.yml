@@ -1,8 +1,8 @@
 name: CI
 
 on:
+  # No base-branch filter: stacked and experimental PRs get checks too
   pull_request:
-    branches: [main]
   push:
     branches: [main]
 
